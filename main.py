@@ -55,7 +55,7 @@ ball1=Ball(50, 50, 30, 'orange', 100, 0.6, 0, 0, 1);
 ball2=Ball(500, 500, 50, 'blue', 300, 1.0, 0, 0, 2);
 ball3=Ball(300, 300, 50, 'yellow', 300, 0.8, 0, 0, 3);
 ball4=Ball(700, 700, 50, 'red', 300, 0.9, 0, 0, 4);
-
+balls = [ball1, ball2, ball3, ball4]
 
 run = True
 while run: 
@@ -63,21 +63,29 @@ while run:
     screen.fill('black')
 
     walls= draw_walls()
-    ball1.draw()
-    ball2.draw()
-    ball3.draw()
-    ball4.draw()
-    ball1.update_pos()
-    ball2.update_pos()
-    ball3.update_pos()
-    ball4.update_pos()
+    for ball in balls:
+        ball.draw()
+    for ball in balls:
+        ball.update_pos()
+
     ball1.ys = ball1.check_gravity()
     ball2.ys = ball2.check_gravity()
     ball3.ys = ball3.check_gravity()
     ball4.ys = ball4.check_gravity()
+
     for event in pg.event.get():
         if event.type == pg.QUIT:
             run = False
+        
+        if event.type == pg.MOUSEBUTTONDOWN:
+            if event.button == 1:
+                if ball1.check_select(event.pos) or ball2.check_select(event.pos) or ball3.check_select(event.pos) or ball4.check_select(event.pos):
+                    active_select=True
+        if event.type == pg.MOUSEBUTTONUP:
+            if event.button==1:
+                active_select=False
+                for i in range(len(balls)):
+                    balls[i].check_select((-1000, -1000))
 
     pg.display.flip()
 pg.quit()
