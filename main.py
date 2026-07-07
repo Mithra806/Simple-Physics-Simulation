@@ -1,5 +1,6 @@
 import pygame as pg
 import math
+import random
 
 pg.init()
 
@@ -133,22 +134,33 @@ def handle_colissions(balls):
                 ball2.ys += (impulse * ny) / ball2.mass
 
 
-ball1=Ball(112, 50, 50, 'rosybrown', 38, 0.55, 0, 0, 0.015, "Mercury")
-ball2=Ball(237, 50, 50, 'burlywood', 91, 0.35, 0, 0, 0.09, "Venus")
+ball1=Ball(112, 50, 50, 'rosybrown', 37.7, 0.55, 0, 0, 0.015, "Mercury")
+ball2=Ball(237, 50, 50, 'burlywood', 90.4, 0.35, 0, 0, 0.09, "Venus")
 ball3=Ball(362, 50, 50, 'darkgreen', 100, 0.65, 0, 0, 0.04, "Earth")
-ball4=Ball(487, 50, 50, 'firebrick', 38, 0.5, 0, 0, 0.025, "Mars")
-ball5=Ball(599, 50, 50, 'darkorange', 234, 0.85, 0, 0, 0.01, "Jupiter")
-ball6=Ball(711, 50, 50, 'darkgoldenrod', 106, 0.8, 0, 0, 0.012, "Saturn")
-ball7=Ball(823, 50, 50, 'teal', 92, 0.9, 0, 0, 0.008, "Uranus")
-ball8=Ball(935, 50, 50, 'blue', 119, 0.92, 0, 0, 0.007, "Neptune")
+ball4=Ball(487, 50, 50, 'firebrick', 37.9, 0.5, 0, 0, 0.025, "Mars")
+ball5=Ball(599, 50, 50, 'darkorange', 252.7, 0.85, 0, 0, 0.01, "Jupiter")
+ball6=Ball(711, 50, 50, 'darkgoldenrod', 106.4, 0.8, 0, 0, 0.012, "Saturn")
+ball7=Ball(823, 50, 50, 'teal', 88.6, 0.9, 0, 0, 0.008, "Uranus")
+ball8=Ball(935, 50, 50, 'blue', 113.7, 0.92, 0, 0, 0.007, "Neptune")
 
 
 balls = [ball1, ball2, ball3, ball4, ball5, ball6, ball7, ball8]
+
+stars = []
+for i in range(20):
+    for i in range(20):
+        star_x = random.randint(0, WIDTH)
+        star_y = random.randint(0, HEIGHT)
+        star_size = random.choice([1, 1, 1, 2])
+        stars.append((star_x, star_y, star_size))
 
 run = True
 while run: 
     timer.tick(fps)
     screen.fill('black')
+    for star in stars:
+        pg.draw.circle(screen, 'white', (star[0], star[1]), star[2])
+
     mouse_coords = pg.mouse.get_pos()
     mouse_trajectory.append(mouse_coords)
     if len(mouse_trajectory) > 20:
@@ -191,3 +203,4 @@ while run:
 
     pg.display.flip()
 pg.quit()
+
